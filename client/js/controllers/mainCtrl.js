@@ -10,6 +10,7 @@ app.controller('mainCtrl', function($scope) {
     // $scope.alert = () => {
     //     alert('ALERT!');
     // }
+    
 })
 
 ///////////////////////over///////////////////////

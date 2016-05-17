@@ -9,6 +9,8 @@ var babel = require('gulp-babel');
 var ngAnnotate = require('gulp-ng-annotate');
 var sourcemaps = require('gulp-sourcemaps');
 var eslint = require('gulp-eslint');
+var sass = require('gulp-sass');
+
 // var ignore = require('gulp-ignore');
 
 
@@ -33,13 +35,13 @@ gulp.task('serve', function() {
 })
 
 gulp.task('watch.lint', function() {
-    return gulp.watch('./**/.js', ['lint'])
+    return gulp.watch(['./**/*.js', '!./node_modules/**', '!./public/bower_components/**'], ['lint'])
 });
 gulp.task('lint', function() {
     console.log('watch!');
     return gulp.src([
-        './**/.js',
-        '!bundle.js',
+        './**/*.js',
+        '!./public/js/**/*.js',
         '!Gulpfile.js',
         '!./node_modules/**',
         '!./public/bower_components/**'
@@ -70,14 +72,17 @@ gulp.task('cleanJS', function() {
     return del('./public/js');
 })
 
-/////////////////////// CSS ///////////////////////////
-gulp.task('watchCSS', function() {
-    return gulp.watch('./client/css/**/*.css', ['css']);
-})
+/////////////////////// SCSS ///////////////////////////
 gulp.task('css', ['cleanCSS'], function() {
-    return gulp.src('./client/css/**/*.css')
+    return gulp.src(['./client/scss/**/*.scss'])
+        .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./public/css'));
 })
+
+gulp.task('watchCSS', function() {
+    return gulp.watch('./client/scss/**', ['css']);
+})
+
 gulp.task('cleanCSS', function() {
     return del('./public/css');
 })
