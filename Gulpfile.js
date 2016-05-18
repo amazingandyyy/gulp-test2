@@ -12,6 +12,9 @@ var sourcemaps = require('gulp-sourcemaps');
 =======
 var eslint = require('gulp-eslint');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var plumber = require('gulp-plumber');
+var browserSync = require('browser-sync');
 
 // var ignore = require('gulp-ignore');
 
@@ -45,6 +48,7 @@ gulp.task('watch.lint', function() {
 gulp.task('lint', function() {
     console.log('watch!');
     return gulp.src([
+<<<<<<< HEAD
         './**/*.js',
         '!./public/js/**/*.js',
         '!Gulpfile.js',
@@ -54,6 +58,17 @@ gulp.task('lint', function() {
     // .ignore(['node_modules','bower_components'])
     .pipe(eslint())
     .pipe(eslint.format());
+>>>>>>> origin/master
+=======
+            './**/*.js',
+            '!./public/js/**/*.js',
+            '!Gulpfile.js',
+            '!./node_modules/**',
+            '!./public/bower_components/**'
+        ])
+        // .ignore(['node_modules','bower_components'])
+        .pipe(eslint())
+        .pipe(eslint.format());
 >>>>>>> origin/master
 })
 
@@ -72,12 +87,17 @@ gulp.task('js', ['cleanJS'], function() {
         }))
         .pipe(uglify())
         .pipe(sourcemaps.write())
+<<<<<<< HEAD
         .pipe(gulp.dest('./public/js'));
 <<<<<<< HEAD
 })
 gulp.task('cleanJS', function() {
     return del('./public/js');
 =======
+>>>>>>> origin/master
+=======
+        .pipe(gulp.dest('./public/js'))
+        .pipe(plumber());
 >>>>>>> origin/master
 })
 gulp.task('cleanJS', function() {
@@ -88,6 +108,7 @@ gulp.task('cleanJS', function() {
 gulp.task('css', ['cleanCSS'], function() {
     return gulp.src(['./client/scss/**/*.scss'])
         .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer())
         .pipe(gulp.dest('./public/css'));
 })
 

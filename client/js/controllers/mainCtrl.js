@@ -10,10 +10,6 @@ app.controller('mainCtrl', function($scope) {
     // $scope.alert = () => {
     //     alert('ALERT!');
     // }
-<<<<<<< HEAD
-=======
-    
->>>>>>> origin/master
 })
 
 ///////////////////////over///////////////////////
