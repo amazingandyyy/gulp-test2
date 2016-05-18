@@ -10,6 +10,9 @@ var ngAnnotate = require('gulp-ng-annotate');
 var sourcemaps = require('gulp-sourcemaps');
 var eslint = require('gulp-eslint');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var plumber = require('gulp-plumber');
+var browserSync = require('browser-sync');
 
 // var ignore = require('gulp-ignore');
 
@@ -40,15 +43,15 @@ gulp.task('watch.lint', function() {
 gulp.task('lint', function() {
     console.log('watch!');
     return gulp.src([
-        './**/*.js',
-        '!./public/js/**/*.js',
-        '!Gulpfile.js',
-        '!./node_modules/**',
-        '!./public/bower_components/**'
-    ])
-    // .ignore(['node_modules','bower_components'])
-    .pipe(eslint())
-    .pipe(eslint.format());
+            './**/*.js',
+            '!./public/js/**/*.js',
+            '!Gulpfile.js',
+            '!./node_modules/**',
+            '!./public/bower_components/**'
+        ])
+        // .ignore(['node_modules','bower_components'])
+        .pipe(eslint())
+        .pipe(eslint.format());
 })
 
 
@@ -66,7 +69,8 @@ gulp.task('js', ['cleanJS'], function() {
         }))
         .pipe(uglify())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./public/js'));
+        .pipe(gulp.dest('./public/js'))
+        .pipe(plumber());
 })
 gulp.task('cleanJS', function() {
     return del('./public/js');
@@ -76,6 +80,7 @@ gulp.task('cleanJS', function() {
 gulp.task('css', ['cleanCSS'], function() {
     return gulp.src(['./client/scss/**/*.scss'])
         .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer())
         .pipe(gulp.dest('./public/css'));
 })
 
